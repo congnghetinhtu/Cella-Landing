@@ -1,123 +1,129 @@
 import { motion } from "framer-motion";
 
 const entrance = {
-  initial: { filter: "blur(10px)", opacity: 0, y: 24 },
-  whileInView: { filter: "blur(0px)", opacity: 1, y: 0 },
+  initial: { opacity: 0, y: 22 },
+  whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, amount: 0.2 },
 };
 
-const PROFILES = ["Flat", "Bose", "Sony", "Apple", "Sennheiser", "Beats", "JBL", "AKG"];
-const FORMATS = ["mp3", "wav", "m4a", "flac", "aac", "caf", "ogg", "aif"];
+const PROFILES = ["Flat", "Bose", "Sony", "AirPods Max"];
+const THEMES = [
+  { name: "Dark", hex: "#0d0b09", ring: "rgba(230,221,201,0.28)" },
+  { name: "Light", hex: "#e8e0d0", ring: "rgba(16,13,10,0.25)" },
+  { name: "Seafoam", hex: "#0d1f1c", ring: "rgba(127,217,107,0.45)" },
+  { name: "Brat", hex: "#1c1a13", ring: "rgba(127,217,107,0.35)" },
+];
 
-const SHORTCUTS: { key: string; label: string; desc: string }[] = [
-  { key: "␣", label: "Space", desc: "Play / pause" },
-  { key: "←", label: "Left", desc: "Skip back — seek within 3 s, else previous" },
-  { key: "→", label: "Right", desc: "Crossfade to next track" },
+const KEYS = [
+  { key: "Space", label: "Play / pause" },
+  { key: "← →", label: "Skip · seek · next track" },
+  { key: "L", label: "Cycle lyrics" },
 ];
 
 export function BeyondMix() {
   return (
-    <section className="relative overflow-hidden bg-vinyl-ink text-vinyl-bone">
+    <section id="library" className="relative overflow-hidden bg-desk-ink text-desk-metal">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(900px 500px at 88% 100%, rgba(255,128,56,0.08), transparent 60%)",
+            "radial-gradient(900px 560px at 90% 0%, rgba(255,128,56,0.07), transparent 60%), radial-gradient(800px 520px at 4% 100%, rgba(255,176,58,0.05), transparent 60%)",
         }}
       />
-      <div aria-hidden className="pointer-events-none absolute inset-0 vinyl-grain opacity-25" />
 
-      <div className="relative z-10 mx-auto max-w-6xl px-6 pb-32 md:px-10 lg:px-12">
+      <div className="relative mx-auto max-w-6xl px-6 pb-32 md:px-10 lg:px-12">
+        {/* header */}
         <motion.div
           {...entrance}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="grid grid-cols-1 items-end gap-6 border-b border-vinyl-bone/10 pb-10 md:grid-cols-12"
+          className="grid grid-cols-1 items-end gap-8 md:grid-cols-12"
         >
-          <div className="md:col-span-8">
-            <div className="font-body text-[11px] font-semibold uppercase tracking-[0.24em] text-vinyl-ember">
-              // Beyond the Mix
-            </div>
-            <h2 className="font-heading mt-4 text-5xl italic leading-[0.95] tracking-[-0.03em] text-vinyl-bone md:text-7xl">
-              A record player, <span className="text-vinyl-ember">reimagined.</span>
-            </h2>
-          </div>
-          <p className="font-body max-w-md text-sm leading-relaxed text-vinyl-bone/60 md:col-span-4">
-            Three tabs. Feeds for reading, Cella for listening, Config for the library.
-            Fullscreen, keyboard-first, native on Apple Silicon.
+          <h2 className="max-w-3xl font-display text-4xl leading-[1.06] tracking-[-0.01em] text-desk-metal md:col-span-8 md:text-6xl">
+            More on
+            <br />
+            the desk<span className="text-desk-hot">.</span>
+          </h2>
+          <p className="max-w-md font-body text-sm leading-relaxed text-desk-faint md:col-span-4">
+            A player, a lyrics lab, a boomerang maker, and a library format that
+            keeps your folders yours — all four looks, four EQ curves, three keys
+            to run it.
           </p>
         </motion.div>
 
-        <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-6 md:gap-5">
-          {/* Feeds tab */}
+        <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-6">
+          {/* Library format */}
           <motion.article
             {...entrance}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="vinyl-tile flex flex-col rounded-[28px] p-8 md:col-span-3 md:min-h-[320px]"
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.12 }}
+            className="plate relative rounded-lg p-7 md:col-span-3 md:p-8"
           >
-            <span className="font-body text-[10px] font-bold uppercase tracking-[0.24em] text-vinyl-bone/40">
-              05 · Feeds
-            </span>
-            <h3 className="font-heading mt-4 text-3xl italic leading-[1.05] tracking-tight text-vinyl-bone md:text-4xl">
-              EPUB reader, sentence by sentence.
+            <div className="flex items-center justify-between">
+              <span className="placard">Your library</span>
+              <span className="led led-lime" />
+            </div>
+            <h3 className="mt-6 font-display text-2xl leading-tight text-desk-metal md:text-[26px]">
+              One folder.
+              <br />
+              Cella takes it from there<span className="text-desk-hot">.</span>
             </h3>
-            <p className="font-body mt-4 max-w-md text-sm leading-relaxed text-vinyl-bone/60">
-              Read while you listen. A minimal EPUB library with progress tracking, cover art,
-              a mini now-playing bar, and a gentle water reminder timer.
+            <p className="mt-4 max-w-md font-body text-sm leading-relaxed text-desk-faint">
+              Point at any playlist folder. Artwork and lyrics ride inside —
+              <span className="font-mono text-[12px] text-desk-metal/90"> Artist — Title.mp3</span>{" "}
+              is parsed and matched automatically.
             </p>
-
-            <div className="mt-auto space-y-2 pt-8">
-              {[
-                "A rhythm found me before I found it. It was warm, and it was patient.",
-                "The needle dropped and the room, for a moment, agreed to listen.",
-                "Somewhere between the verse and the chorus, an hour disappeared.",
-              ].map((line, i) => (
-                <p
-                  key={i}
-                  className="font-heading text-lg italic leading-snug text-vinyl-bone/80"
-                  style={{ opacity: 1 - i * 0.28 }}
-                >
-                  {line}
-                </p>
-              ))}
+            <div className="mt-7 rounded-md bg-desk-room/70 p-4 font-mono text-[11px] leading-[1.9] tracking-tight text-desk-faint ring-1 ring-inset ring-desk-hair">
+              <div className="text-desk-lime">MIXSET.cella/</div>
+              <div className="pl-4">
+                MIXSET.ca <span className="text-desk-faint/70">← index</span>
+              </div>
+              <div className="pl-4">cma/ · album A/ · album B/</div>
+              <div className="pl-8">01 - Track.mp3</div>
+              <div className="pl-8">lrc/01 - Track.lrc</div>
             </div>
           </motion.article>
 
-          {/* Audio profiles */}
+          {/* Looks + EQ */}
           <motion.article
             {...entrance}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
-            className="vinyl-tile flex flex-col rounded-[28px] p-8 md:col-span-3 md:min-h-[320px]"
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.18 }}
+            className="plate relative rounded-lg p-7 md:col-span-3 md:p-8"
           >
-            <span className="font-body text-[10px] font-bold uppercase tracking-[0.24em] text-vinyl-bone/40">
-              06 · Audio Profiles
-            </span>
-            <h3 className="font-heading mt-4 text-3xl italic leading-[1.05] tracking-tight text-vinyl-bone md:text-4xl">
-              Eight EQ curves. One for your ears.
+            <div className="flex items-center justify-between">
+              <span className="placard">Looks · Ears</span>
+              <span className="led led-amber" />
+            </div>
+            <h3 className="mt-6 font-display text-2xl leading-tight text-desk-metal md:text-[26px]">
+              Four rooms.
+              <br />
+              Four curves<span className="text-desk-hot">.</span>
             </h3>
-            <p className="font-body mt-4 max-w-md text-sm leading-relaxed text-vinyl-bone/60">
-              Flat, plus curves tuned for Bose, Sony, Apple, Sennheiser, Beats, JBL and AKG —
-              routed through spatial delay, hall reverb and a peak limiter.
+            <p className="mt-4 max-w-md font-body text-sm leading-relaxed text-desk-faint">
+              Dark, light, seafoam, brat — with system or forced theme. EQ shapes
+              tuned for the commonest cans, ten bands deep.
             </p>
-
-            <div className="mt-auto flex flex-wrap gap-2 pt-8">
-              {PROFILES.map((p, i) => (
+            <div className="mt-7 flex flex-wrap gap-3">
+              {THEMES.map((t) => (
+                <span
+                  key={t.name}
+                  className="flex items-center gap-2 rounded-full border border-desk-hair px-3 py-1.5"
+                  title={t.name}
+                >
+                  <span
+                    className="h-3.5 w-3.5 rounded-full"
+                    style={{ background: t.hex, boxShadow: `0 0 0 1px ${t.ring}` }}
+                  />
+                  <span className="font-mono text-[10px] tracking-[0.14em] text-desk-faint">
+                    {t.name.toUpperCase()}
+                  </span>
+                </span>
+              ))}
+            </div>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {PROFILES.map((p) => (
                 <span
                   key={p}
-                  className="font-body rounded-full border px-3 py-1.5 text-[11px]"
-                  style={
-                    i === 0
-                      ? {
-                          borderColor: "rgba(255,128,56,0.5)",
-                          background: "rgba(255,128,56,0.12)",
-                          color: "#FFB388",
-                        }
-                      : {
-                          borderColor: "rgba(232,217,190,0.12)",
-                          background: "rgba(18,16,14,0.4)",
-                          color: "rgba(232,217,190,0.8)",
-                        }
-                  }
+                  className="rounded-lg border border-desk-hair px-2.5 py-1 font-mono text-[10px] tracking-[0.1em] text-desk-metal/85"
                 >
                   {p}
                 </span>
@@ -125,64 +131,69 @@ export function BeyondMix() {
             </div>
           </motion.article>
 
-          {/* Keyboard shortcuts */}
+          {/* Lyrics + motion lab */}
           <motion.article
             {...entrance}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.15 }}
-            className="vinyl-tile flex flex-col rounded-[28px] p-8 md:col-span-3 md:min-h-[260px]"
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.22 }}
+            className="plate relative rounded-lg p-7 md:col-span-4 md:p-8"
           >
-            <span className="font-body text-[10px] font-bold uppercase tracking-[0.24em] text-vinyl-bone/40">
-              07 · Keyboard-first
-            </span>
-            <h3 className="font-heading mt-4 text-3xl italic leading-[1.05] tracking-tight text-vinyl-bone md:text-4xl">
-              Three keys. Full control.
+            <div className="flex items-center justify-between">
+              <span className="placard">Labs</span>
+              <span className="placard">LRC · Motion</span>
+            </div>
+            <h3 className="mt-6 max-w-lg font-display text-2xl leading-tight text-desk-metal md:text-[26px]">
+              Stamped lyrics,
+              <br />
+              looped moments<span className="text-desk-hot">.</span>
             </h3>
+            <p className="mt-4 max-w-xl font-body text-sm leading-relaxed text-desk-faint">
+              An enhanced LRC editor slows playback to 0.25×–2×, taps timestamps
+              into place, and keeps fifty steps of undo. The Motion lab turns any
+              clip into a mark-based boomerang at 0.3, 0.5, 1, or 2 seconds.
+            </p>
+            <div className="mt-7 grid grid-cols-2 gap-3">
+              <div className="rounded-md bg-desk-room/60 px-4 py-3 ring-1 ring-inset ring-desk-hair">
+                <div className="placard">LRC editor</div>
+                <div className="mt-1.5 font-mono text-[11px] tracking-[0.06em] text-desk-metal/90">
+                  0.25–2× · tap-stamp · undo 50
+                </div>
+              </div>
+              <div className="rounded-md bg-desk-room/60 px-4 py-3 ring-1 ring-inset ring-desk-hair">
+                <div className="placard">Motion</div>
+                <div className="mt-1.5 font-mono text-[11px] tracking-[0.06em] text-desk-metal/90">
+                  boomerang · 0.3/0.5/1/2 s
+                </div>
+              </div>
+            </div>
+          </motion.article>
 
-            <ul className="mt-6 space-y-3">
-              {SHORTCUTS.map((s) => (
-                <li key={s.label} className="flex items-center gap-4">
-                  <kbd className="font-heading flex h-10 w-10 items-center justify-center rounded-lg border border-vinyl-bone/15 bg-vinyl-ink/60 text-lg italic text-vinyl-bone shadow-[inset_0_1px_0_rgba(232,217,190,0.08)]">
-                    {s.key}
+          {/* Keyboard */}
+          <motion.article
+            {...entrance}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.26 }}
+            className="plate relative rounded-lg p-7 md:col-span-2 md:p-8"
+          >
+            <div className="flex items-center justify-between">
+              <span className="placard">Keyboard</span>
+              <span className="led led-dim" />
+            </div>
+            <h3 className="mt-6 font-display text-xl leading-tight text-desk-metal">
+              Three keys.
+              <br />
+              Full control<span className="text-desk-hot">.</span>
+            </h3>
+            <ul className="mt-6 space-y-3.5">
+              {KEYS.map((k) => (
+                <li key={k.key} className="flex items-center gap-3">
+                  <kbd className="flex h-9 min-w-9 items-center justify-center gap-1 rounded-md border border-desk-hair bg-desk-room/70 px-2.5 font-mono text-[13px] tracking-[0.12em] text-desk-metal shadow-[inset_0_1px_0_rgba(230,221,201,0.08)]">
+                    {k.key}
                   </kbd>
-                  <div>
-                    <div className="font-body text-[10px] font-bold uppercase tracking-[0.24em] text-vinyl-bone/40">
-                      {s.label}
-                    </div>
-                    <div className="font-body text-sm text-vinyl-bone/80">{s.desc}</div>
-                  </div>
+                  <span className="font-body text-[12px] leading-snug text-desk-faint">
+                    {k.label}
+                  </span>
                 </li>
               ))}
             </ul>
-          </motion.article>
-
-          {/* Formats */}
-          <motion.article
-            {...entrance}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-            className="vinyl-tile flex flex-col rounded-[28px] p-8 md:col-span-3 md:min-h-[260px]"
-          >
-            <span className="font-body text-[10px] font-bold uppercase tracking-[0.24em] text-vinyl-bone/40">
-              08 · Library
-            </span>
-            <h3 className="font-heading mt-4 text-3xl italic leading-[1.05] tracking-tight text-vinyl-bone md:text-4xl">
-              Drop a folder. Cella takes it from there.
-            </h3>
-            <p className="font-body mt-4 max-w-md text-sm leading-relaxed text-vinyl-bone/60">
-              Point at any folder. Files named{" "}
-              <span className="font-heading italic text-vinyl-bone/90">Artist — Title</span>{" "}
-              are parsed automatically.
-            </p>
-
-            <div className="mt-auto flex flex-wrap gap-2 pt-6">
-              {FORMATS.map((f) => (
-                <span
-                  key={f}
-                  className="font-heading rounded-md border border-vinyl-bone/10 bg-vinyl-ink/40 px-2.5 py-1 text-sm italic text-vinyl-bone/85"
-                >
-                  .{f}
-                </span>
-              ))}
-            </div>
           </motion.article>
         </div>
       </div>

@@ -11,13 +11,13 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Open-source SwiftUI music player for macOS. Analyzes BPM, key, vocals, and energy — then beat-aligns crossfades into one seamless mix.",
+          "A macOS music player with OpenMix built in: a live automix engine that reads BPM, key, energy and vocals, then beat-aligns the crossfades so nothing lands on a lyric.",
       },
       { property: "og:title", content: "Cella — Automix Music Player for macOS" },
       {
         property: "og:description",
         content:
-          "Track analysis, TSP-based ordering, and vocal-aware beat-aligned crossfades. Open source under MIT.",
+          "OpenMix reads every track — BPM, key, energy, vocals — and crossfades on the bar, vocal-safe. A SwiftUI + Python player for macOS. Open source under MIT.",
       },
     ],
   }),
@@ -26,7 +26,7 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <main className="bg-black">
+    <main className="bg-desk-room">
       <Hero />
       <Capabilities />
       <BeyondMix />
