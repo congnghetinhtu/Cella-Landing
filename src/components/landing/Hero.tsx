@@ -1,157 +1,258 @@
 import { motion } from "framer-motion";
-import { DotMatrix } from "./DotMatrix";
+import { LineAnimation } from "./LineAnimation";
 import { Navbar } from "./Navbar";
-import { ArrowUpRight, PlayIcon } from "./icons";
+import { ArrowUpRight } from "./icons";
+import { MIX } from "./desk";
 
-const entrance = {
-  initial: { filter: "blur(10px)", opacity: 0, y: 20 },
-  animate: { filter: "blur(0px)", opacity: 1, y: 0 },
-};
-const trans = (delay: number) => ({ duration: 0.8, ease: "easeOut" as const, delay });
+const REPO = "https://github.com/congnghetinhtu/Cella";
+
+function Screws() {
+  return (
+    <div aria-hidden className="pointer-events-none absolute inset-3 z-10">
+      <span className="screw absolute left-0 top-0" />
+      <span className="screw absolute right-0 top-0" />
+      <span className="screw absolute bottom-0 left-0" />
+      <span className="screw absolute bottom-0 right-0" />
+    </div>
+  );
+}
+
+function RulerLine() {
+  const bars = Array.from({ length: 11 }, (_, i) => i + 1);
+  return (
+    <div className="w-full">
+      <div className="flex items-end gap-[3px]">
+        {bars.map((b) => {
+          const active = b >= 6 && b <= 7;
+          const alt = b === 5 || b === 8;
+          return (
+            <span
+              key={b}
+              aria-hidden
+              className={
+                active
+                  ? "h-7 w-[10px] rounded-[2px] bg-desk-hot shadow-[0_0_10px_rgba(255,128,56,0.55)]"
+                  : alt
+                    ? "h-7 w-[10px] rounded-[2px] border border-dashed border-desk-amber/50"
+                    : "h-7 w-[10px] rounded-[2px] bg-desk-metal/12"
+              }
+            />
+          );
+        })}
+      </div>
+      <div className="mt-3 flex items-center justify-between font-mono text-[9px] tracking-[0.18em] text-desk-faint">
+        <span>Bar-quantized</span>
+        <span>T+2.0 s · equal-power S</span>
+      </div>
+    </div>
+  );
+}
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden bg-vinyl-ink text-vinyl-bone">
-      {/* warm vignette + grain */}
+    <section
+      id="player"
+      className="relative overflow-hidden bg-desk-room text-desk-metal"
+    >
+      <Navbar />
+      {/* room light */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 z-0"
+        className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(1200px 700px at 82% 8%, rgba(255,106,44,0.14), transparent 60%), radial-gradient(900px 600px at 10% 90%, rgba(42,31,23,0.9), transparent 70%)",
+            "radial-gradient(1100px 640px at 84% 4%, rgba(255,128,56,0.13), transparent 60%), radial-gradient(900px 640px at 6% 96%, rgba(127,217,107,0.06), transparent 60%)",
         }}
       />
-      <div aria-hidden className="pointer-events-none absolute inset-0 z-0 vinyl-grain opacity-40" />
 
-      <div className="relative z-10">
-        <Navbar />
-
-        <div className="mx-auto grid min-h-screen max-w-6xl grid-cols-1 items-center gap-10 px-6 pb-16 pt-32 md:grid-cols-12 md:gap-8 md:px-10 md:pt-40 lg:px-12">
-          {/* Left: editorial column */}
-          <div className="md:col-span-6 lg:col-span-6">
-            <motion.div {...entrance} transition={trans(0.15)} className="flex items-center gap-3">
-              <span className="h-1.5 w-1.5 rounded-full bg-vinyl-ember shadow-[0_0_10px_rgba(255,106,44,0.8)]" />
-              <span className="font-body text-[11px] font-semibold uppercase tracking-[0.24em] text-vinyl-ember">
-                Version 1.0 · macOS
-              </span>
+      <div className="relative mx-auto max-w-6xl px-6 pb-20 pt-36 md:px-10 md:pb-28 md:pt-44 lg:px-12">
+        <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-12 md:gap-8">
+          {/* Left: the speech */}
+          <div className="md:col-span-6 lg:col-span-5">
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: "easeOut", delay: 0.08 }}
+              className="flex items-center gap-3"
+            >
+              <span className="led led-amber" />
+              <span className="placard">Cella · OpenMix · macOS 15+</span>
             </motion.div>
 
             <motion.h1
-              {...entrance}
-              transition={trans(0.3)}
-              className="font-heading mt-6 text-[68px] italic leading-[0.9] tracking-[-0.03em] text-vinyl-bone md:text-[92px] lg:text-[108px]"
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut", delay: 0.16 }}
+              className="mt-7 font-display text-[42px] leading-[1.04] tracking-[-0.01em] text-desk-metal md:text-[52px] lg:text-[60px]"
             >
-              Automix
+              Your library,
               <br />
-              with <span className="text-vinyl-ember">human</span>
+              mixed like
               <br />
-              <span className="italic">soul.</span>
+              a <span className="text-desk-hot">live set.</span>
             </motion.h1>
 
             <motion.p
-              {...entrance}
-              transition={trans(0.5)}
-              className="font-body mt-8 max-w-[44ch] text-base leading-relaxed text-vinyl-bone/60 md:text-lg"
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut", delay: 0.28 }}
+              className="mt-8 max-w-[62ch] font-body text-[15px] leading-relaxed text-desk-faint md:text-base"
             >
-              The macOS engine that thinks like a DJ. Cella reads BPM, key, LUFS and vocals from
-              every track — then beat-aligns the crossfade so nothing ever lands on top of a lyric.
+              Cella reads BPM, key, energy, and vocals on every track — then the
+              OpenMix engine beat-matches the crossfades so nothing ever lands on
+              top of a lyric. Drop a folder in. The desk does the rest.
             </motion.p>
 
             <motion.div
-              {...entrance}
-              transition={trans(0.7)}
-              className="mt-10 flex flex-wrap items-center gap-4"
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
+              className="mt-10 flex flex-wrap items-center gap-3"
             >
               <a
-                href="https://github.com/congnghetinhtu/Cella"
+                href={REPO}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 rounded-full bg-vinyl-bone px-6 py-3.5 text-sm font-semibold uppercase tracking-[0.16em] text-vinyl-ink transition-transform active:scale-[0.98]"
+                className="inline-flex items-center gap-2.5 rounded-lg bg-desk-metal px-6 py-3.5 font-body text-sm font-semibold uppercase tracking-[0.15em] text-desk-ink transition-transform hover:bg-white active:scale-[0.98]"
               >
-                Clone on GitHub
-                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                <span className="h-1.5 w-1.5 rounded-full bg-desk-lime shadow-[0_0_8px_rgba(127,217,107,0.9)]" />
+                Get Cella
+                <ArrowUpRight className="h-4 w-4" />
               </a>
-              <button className="inline-flex items-center gap-2 rounded-full border border-vinyl-bone/20 px-5 py-3 text-sm font-medium text-vinyl-bone/90 transition-colors hover:bg-vinyl-bone/5">
-                <PlayIcon className="h-4 w-4" />
-                Hear a Mix
-              </button>
+              <a
+                href={REPO}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2.5 rounded-lg border border-desk-hair bg-desk-panel/60 px-5 py-3.5 font-body text-sm font-medium text-desk-metal transition-colors hover:border-desk-metal/30 hover:text-white"
+              >
+                <ArrowUpRight className="h-4 w-4" />
+                Read the code
+              </a>
             </motion.div>
-
 
             <motion.div
-              {...entrance}
-              transition={trans(0.9)}
-              className="mt-12 grid max-w-md grid-cols-3 gap-6 border-t border-vinyl-bone/10 pt-6"
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut", delay: 0.52 }}
+              className="mt-12"
             >
-              {[
-                { k: "Glide", v: "2s" },
-                { k: "Matrix", v: "9×5" },
-                { k: "Analysis", v: "22 kHz" },
-              ].map((s) => (
-                <div key={s.k}>
-                  <div className="font-heading text-3xl italic tracking-tight text-vinyl-bone">
-                    {s.v}
-                  </div>
-                  <div className="font-body mt-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-vinyl-bone/40">
-                    {s.k}
-                  </div>
-                </div>
-              ))}
-            </motion.div>
-          </div>
-
-          {/* Right: emotion screen tile */}
-          <motion.div
-            initial={{ filter: "blur(12px)", opacity: 0, y: 30 }}
-            animate={{ filter: "blur(0px)", opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: "easeOut", delay: 0.4 }}
-            className="md:col-span-6 lg:col-span-6"
-          >
-            <div className="vinyl-tile relative rounded-[36px] p-8 md:p-10">
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="font-body text-[10px] font-bold uppercase tracking-[0.24em] text-vinyl-bone/40">
-                    Emotion State
-                  </div>
-                  <div className="font-heading mt-1 text-2xl italic text-vinyl-bone">
-                    Peak Energy
-                  </div>
-                </div>
-                <div className="flex items-center gap-2 rounded-full border border-vinyl-bone/10 px-3 py-1.5">
-                  <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-vinyl-ember shadow-[0_0_8px_rgba(255,106,44,0.9)]" />
-                  <span className="font-body text-[10px] font-semibold uppercase tracking-[0.2em] text-vinyl-bone/70">
-                    Live
-                  </span>
-                </div>
-              </div>
-
-              <div className="my-10 flex items-center justify-center">
-                <DotMatrix size="lg" />
-              </div>
-
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grille-h" />
+              <div className="grid grid-cols-1 gap-5 pt-6 sm:grid-cols-3">
                 {[
-                  { k: "BPM", v: "124.8" },
-                  { k: "Key", v: "8A" },
-                  { k: "LUFS", v: "−9.2" },
+                  { k: "Engine", v: "OpenMix · Python" },
+                  { k: "Chunks", v: "5 s · 44.1 kHz" },
+                  { k: "Buffer", v: "3 ahead" },
                 ].map((s) => (
-                  <div
-                    key={s.k}
-                    className="rounded-2xl bg-vinyl-ink/40 px-4 py-3 ring-1 ring-inset ring-vinyl-bone/5"
-                  >
-                    <div className="font-body text-[10px] font-bold uppercase tracking-[0.2em] text-vinyl-bone/40">
-                      {s.k}
-                    </div>
-                    <div className="font-heading mt-1 text-2xl italic tracking-tight text-vinyl-bone">
+                  <div key={s.k}>
+                    <div className="placard">{s.k}</div>
+                    <div className="mt-1.5 font-mono text-[13px] tracking-tight text-desk-metal">
                       {s.v}
                     </div>
                   </div>
                 ))}
               </div>
+            </motion.div>
+          </div>
+
+          {/* Right: the master bus */}
+          <motion.div
+            initial={{ opacity: 0, y: 26 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, ease: "easeOut", delay: 0.34 }}
+            className="md:col-span-6 lg:col-span-7"
+          >
+            <div className="plate sweep relative rounded-lg p-6 md:p-8">
+              <Screws />
+
+              <div className="relative z-0 flex items-center justify-between gap-4">
+                <div className="flex items-center gap-2.5">
+                  <span className="led led-lime" />
+                  <span className="placard">Master bus · live</span>
+                </div>
+                <span className="font-mono text-[11px] tracking-[0.2em] text-desk-faint">
+                  MIX {MIX.key} · {MIX.bpm} BPM
+                </span>
+              </div>
+
+              {/* emotion screen — line stage */}
+              <div className="relative mt-5 overflow-hidden rounded-md border border-desk-hair bg-desk-room/70 p-5 md:p-6">
+                <div className="flex items-center justify-between">
+                  <span className="placard">Emotion · line stage</span>
+                  <span className="flex items-center gap-2 font-mono text-[10px] tracking-[0.16em] text-desk-faint">
+                    <span className="led led-mint" />
+                    SEAFOAM · {MIX.bpm} BPM
+                  </span>
+                </div>
+                <div className="mt-5">
+                  <LineAnimation size="lg" label="Emotion screen on the master bus" />
+                </div>
+                <div className="mt-4 flex items-center justify-between">
+                  <span className="font-display text-lg text-desk-metal">
+                    Peak Energy
+                  </span>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-desk-faint">
+                    {MIX.energy} energy · live
+                  </span>
+                </div>
+              </div>
+
+              {/* ballistics */}
+              <div className="relative mt-4 rounded-md border border-desk-hair bg-desk-room/50 p-5">
+                <div className="flex items-center justify-between">
+                  <span className="placard">Ballistics</span>
+                  <span className="font-mono text-[10px] tracking-[0.18em] text-desk-faint">
+                    LIVE
+                  </span>
+                </div>
+                <div className="mt-4 flex flex-col items-stretch justify-between gap-6 sm:flex-row sm:items-end">
+                  <div className="grid flex-1 grid-cols-3 gap-4">
+                    {[
+                      { label: "L", heights: [40, 76, 52, 88, 66, 44, 78, 58, 92, 70, 50, 82, 60, 46] },
+                      { label: "R", heights: [60, 80, 56, 44, 90, 62, 74, 48, 68, 40, 84, 54, 72, 50] },
+                      { label: "M", heights: [50, 92, 74, 58, 86, 52, 96, 64, 80, 44, 70, 88, 56, 62] },
+                    ].map((m) => (
+                      <div key={m.label} className="flex flex-col gap-2">
+                        <span className="placard">{m.label}</span>
+                        <div className="vu w-full">
+                          {m.heights.map((h, i) => (
+                            <i key={i} style={{ height: `${h}%` }} />
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="space-y-2.5 text-right">
+                    {[
+                      { k: "BPM", v: MIX.bpm },
+                      { k: "KEY", v: MIX.key },
+                      { k: "ENERGY", v: MIX.energy },
+                    ].map((s) => (
+                      <div key={s.k} className="flex items-center justify-end gap-3">
+                        <span className="placard">{s.k}</span>
+                        <span className="w-12 font-mono text-sm text-desk-metal">
+                          {s.v}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* crossfade ruler */}
+              <div className="relative mt-4 rounded-md border border-desk-hair bg-desk-room/50 p-5">
+                <div className="mb-4 flex items-center justify-between">
+                  <span className="placard">Crossfade</span>
+                  <span className="flex items-center gap-2 font-mono text-[10px] tracking-[0.16em] text-desk-faint">
+                    <span className="h-1.5 w-1.5 rounded-full bg-desk-lime shadow-[0_0_8px_rgba(127,217,107,0.9)]" />
+                    VOCAL-SAFE
+                  </span>
+                </div>
+                <RulerLine />
+              </div>
             </div>
 
-            <p className="font-body mt-4 text-center text-[11px] uppercase tracking-[0.24em] text-vinyl-bone/40">
-              Built for macOS Sonoma · Apple Silicon
+            <p className="mt-4 text-center font-mono text-[10px] uppercase tracking-[0.24em] text-desk-faint">
+              Built for macOS 15 · Apple Silicon · SwiftUI + Python
             </p>
           </motion.div>
         </div>

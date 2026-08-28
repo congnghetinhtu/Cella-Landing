@@ -102,7 +102,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Fragment+Mono&family=Inter:wght@400;500;600;700&family=Michroma&display=swap",
       },
 
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
@@ -114,6 +114,24 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   errorComponent: ErrorComponent,
 });
 
+const DIRECTION_CONTRACT = `<!-- impeccable:direction seed-18913663
+      THESIS: Cella's landing reads as the mix console where OpenMix works — every feature is a module on the desk, meters alive with the engine's real numbers, and the better-mix claim is proven at the first viewport instead of announced.
+      OWN-WORLD: Warm charcoal room; brushed-aluminum plates with hex screws, inset hairlines and engraved placards; lime VU ballistics with the product's hot-orange lamp; mono numerals for every measurement; one wide industrial display face carries every spoken word.
+      STORY: The visitor walks up to a lit desk, reads the live meters, understands OpenMix is a real streaming engine, and leaves wanting it in the room — Get Cella on macOS.
+      FIRST VIEWPORT: Left, the display-voice headline and the get-it action. Right, a master-bus module: the emotion screen as a live line stage in the Seafoam theme, three live VU meters, and the bar-quantized crossfade ruler with dashed alternates.
+      EVENT: delight pass. Seafoam stops being a swatch and becomes a room: the master-bus emotion stage is rewritten as Cella's real LineAnimation (seeded Catmull-Rom comet, energy-driven head and trail, drifting stars, mint on deep teal), per the product's LineAnimation spec. The dot-matrix display is retired from the landing.
+      FORM: The Sound Desk, model-pick on the direction roll (seed 18913663).
+      FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+    -->`;
+
+// First child of <body>: the contract rides the emitted markup as a real HTML
+// comment, so a production build can never erase the direction this page owes.
+function DirectionContract() {
+  return (
+    <div aria-hidden className="hidden" dangerouslySetInnerHTML={{ __html: DIRECTION_CONTRACT }} />
+  );
+}
+
 function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
@@ -121,6 +139,7 @@ function RootShell({ children }: { children: ReactNode }) {
         <HeadContent />
       </head>
       <body>
+        <DirectionContract />
         {children}
         <Scripts />
       </body>
